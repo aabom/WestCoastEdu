@@ -1,0 +1,48 @@
+﻿@model WestCoastEdu.Models.ViewModels.ProductVM
+
+<form method="post" asp-action="Upsert">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Edit Course</h2>
+            <hr/>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Product.Title"></label>
+            <input asp-for="Product.Title" class="form-control" required="required" />
+            <span asp-validation-for="Product.Title" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Product.Description"></label>
+            <textarea asp-for="Product.Description" rows="3" class="form-control" required="required"></textarea>
+            <span asp-validation-for="Product.Description" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Product.Length"></label>
+            <input asp-for="Product.Length" class="form-control" required="required" />
+            <span asp-validation-for="Product.Length" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Product.Level"></label>
+            <input asp-for="Product.Level" class="form-control" required="required"/>
+            <span asp-validation-for="Product.Level" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Product.Status"></label>
+            <input asp-for="Product.Status" class="form-control" required="required"/>
+            <span asp-validation-for="Product.Status" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Product.StartDate"></label>
+            <input asp-for="Product.StartDate" class="form-control" required="required"/>
+            <span asp-validation-for="Product.StartDate" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 150px;margin-right: 15px">Update</button>
+        <a asp-controller="Product" asp-action="Index" class="btn btn-secondary" style="width:150px">Return</a>
+    </div>
+</form>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial"/>
+    }
+}
