@@ -1,9 +1,4 @@
-﻿@model IEnumerable<Product>
-@{
-    ViewData["Title"] = "Index";
-}
-
-<div class="container p-3">
+﻿<div class="container p-3">
     <div class="row pt-4">
         <div class="col-6">
             <h2 class="text-primary">Course List</h2>
@@ -14,59 +9,19 @@
             </a>
         </div>
     </div>
-</div>
-<br/>
+    <br /><br />
+    
 
 <table class="table table-bordered table-striped" style="width: 100%">
     <thead>
     <tr>
-        <th>
-            Title
-        </th>
-        <th>
-            Description
-        </th>
-        <th>
-            Length
-        </th>
-        <th>
-            Level
-        </th>
-        <th>
-            Status
-        </th>
-        <th>
-            Start Date
-        </th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Length</th>
+        <th>Level</th>
+        <th>Start Date</th>
         <th></th>
     </tr>
     </thead>
-    <tbody>
-    @foreach (var product in Model)
-    {
-        <tr>
-            <td>
-                @product.Title
-            </td>
-            <td>
-                @product.Description
-            </td>
-            <td>
-                @product.Length
-            </td>
-            <td>
-                @product.Level
-            </td>
-            <td>
-                @product.StartDate
-            </td>
-            <td>
-                <div class="w-50 btn-group" role="group">
-                    <a asp-controller="Product" asp-action="Upsert" asp-route-id="@product.Id" class="btn btn-primary" style="margin-right: 5px"> <i class="bi bi-pencil-square"></i> Edit</a>
-                    <a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-danger"> <i class="bi bi-trash-fill"></i> Delete</a>
-                </div>
-            </td>
-        </tr>
-    }
-    </tbody>
 </table>
+</div>

@@ -21,4 +21,8 @@
     <ProjectReference Include="..\WestCoastEdu.DataAccess\WestCoastEdu.DataAccess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\products\" />
+  </ItemGroup>
+
 </Project>
