@@ -49,10 +49,12 @@ namespace WestCoastEdu.Areas.Admin.Controllers
             }
             else
             {
-
+                productVM.Product = _unitOfWork.Product.GetFirstOrDefault(p => p.Id == id);
+                return View(productVM);
                 //update product
             }
-            return View(productVM);
+
+
         }
 
         [HttpPost]
@@ -68,6 +70,15 @@ namespace WestCoastEdu.Areas.Admin.Controllers
                     var uploads = Path.Combine(wwwRothPath, @"images\products");
                     var extension = Path.GetExtension(file.FileName);
 
+                    if (obj.Product.ImageUrl != null)
+                    {
+                        var oldImagePath = Path.Combine(wwwRothPath, obj.Product.ImageUrl.TrimStart('\\'));
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
+
                     using (var fileStreams =
                            new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
                     {
@@ -76,7 +87,15 @@ namespace WestCoastEdu.Areas.Admin.Controllers
 
                     obj.Product.ImageUrl = @"\images\products\" + fileName + extension;
                 }
-                _unitOfWork.Product.Add(obj.Product);
+
+                if (obj.Product.Id == 0)
+                {
+                    _unitOfWork.Product.Add(obj.Product);
+                }
+                else
+                {
+                    _unitOfWork.Product.Update(obj.Product);
+                }
                 _unitOfWork.Save();
                 TempData["success"] = "Course Created Successfully";
                 return RedirectToAction("Index");
@@ -84,47 +103,37 @@ namespace WestCoastEdu.Areas.Admin.Controllers
             }
             return View(obj);
         }
+        
 
-        public IActionResult Delete(int? id)
-        {
-            if (id is null or 0)
-            {
-                return NotFound();
-            }
-            var product = _unitOfWork.Product.GetFirstOrDefault(p => p.Id == id);
-
-            if (product is null)
-            {
-                return NotFound();
-            }
-
-            return View(product);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeletePost(int? id)
-        {
-            var product = _unitOfWork.Product.GetFirstOrDefault(p => p.Id == id);
-            if (id is null or 0)
-            {
-                return NotFound();
-            }
-            _unitOfWork.Product.Remove(product);
-            _unitOfWork.Save();
-            TempData["success"] = "Course Deleted Successfully";
-            return RedirectToAction("Index");
-        }
-
+        
         #region API CALLS
 
         [HttpGet]
         public IActionResult GetAll()
         {
-            var productList = _unitOfWork.Product.GetAll();
-            return Json(new {data = productList});
+            var productList = _unitOfWork.Product.GetAll(includeProperties: "Location,Status");
+            return Json(new { data = productList });
         }
-        
+
+        [HttpDelete]
+        public IActionResult Delete(int? id)
+        {
+            var product = _unitOfWork.Product.GetFirstOrDefault(p => p.Id == id);
+            if (product == null)
+            {
+                return Json(new {success = false, message = "Error while deleting"});
+            }
+
+            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, product.ImageUrl.TrimStart('\\'));
+            if (System.IO.File.Exists(oldImagePath))
+            {
+                System.IO.File.Delete(oldImagePath);
+            }
+
+            _unitOfWork.Product.Remove(product);
+            _unitOfWork.Save();
+            return Json(new { success = true, message = "Delete Successful" });
+        }
 
         #endregion
 

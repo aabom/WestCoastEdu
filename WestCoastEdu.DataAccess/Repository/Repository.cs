@@ -17,7 +17,7 @@ namespace WestCoastEdu.DataAccess.Repository
         public Repository(ApplicationDbContext db)
         {
             _db = db;
-            //_db.ShoppingCarts.Include(u => u.Product).Include(u=>u.CoverType);
+            //_db.Products.Include(p => p.Location).Include(p => p.Status);
             this.dbSet = _db.Set<T>();
         }
         public void Add(T entity)
