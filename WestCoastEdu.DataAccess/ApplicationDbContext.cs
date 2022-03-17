@@ -14,5 +14,6 @@ namespace WestCoastEdu.DataAccess
         public DbSet<Product> Products { get; set; }
         public DbSet<Location> Location { get; set; }
         public DbSet<Status> Status { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }
