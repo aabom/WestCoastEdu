@@ -6,6 +6,7 @@ using WestCoastEdu.Models.ViewModels;
 
 namespace WestCoastEdu.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class LocationController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

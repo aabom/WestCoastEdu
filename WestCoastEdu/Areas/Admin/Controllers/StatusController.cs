@@ -4,6 +4,7 @@ using WestCoastEdu.Models;
 
 namespace WestCoastEdu.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class StatusController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
