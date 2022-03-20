@@ -17,7 +17,7 @@ namespace WestCoastEdu.DataAccess.Repository
         public Repository(ApplicationDbContext db)
         {
             _db = db;
-            //_db.Products.Include(p => p.Location).Include(p => p.Status);
+            //_db.ShoppingCarts.Include(p => p.Product).Include(p => p.Status);
             this.dbSet = _db.Set<T>();
         }
         public void Add(T entity)
@@ -25,13 +25,14 @@ namespace WestCoastEdu.DataAccess.Repository
             dbSet.Add(entity);
         }
         //includeProp - "Category,CoverType"
-        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null, string? includeProperties = null)
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter=null, string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
-            if (filter != null)
+            if (filter is not null)
             {
                 query = query.Where(filter);
             }
+
             if (includeProperties != null)
             {
                 foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))

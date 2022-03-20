@@ -17,11 +17,16 @@ namespace WestCoastEdu.DataAccess.Repository
             Location = new LocationRepository(_db);
             Status = new StatusRepository(_db);
             Product = new ProductRepository(_db);
+            Customer = new CustomerRepository(_db);
+            ApplicationUser = new ApplicationUserRepository(_db);
+            ShoppingCart = new ShoppingCartRepository(_db);
         }
         public ILocationRepository Location { get; private set; }
         public IStatusRepository Status { get; private set; }
         public IProductRepository Product { get; private set; }
-        
+        public ICustomerRepository Customer { get; private set; }
+        public IApplicationUserRepository ApplicationUser { get; private set; }
+        public IShoppingCartRepository ShoppingCart { get; private set; }
         public void Save()
         {
             _db.SaveChanges();

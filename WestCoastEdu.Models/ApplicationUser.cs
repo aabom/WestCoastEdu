@@ -8,18 +8,15 @@ using System.Threading.Tasks;
 
 namespace WestCoastEdu.Models
 {
-    public class User : IdentityUser
+    public class ApplicationUser : IdentityUser
     {
         [Required]
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
-        [Required]
-        public string StreetAddress { get; set; }
-        [Required]
-        public string PostalCode { get; set; }
-        [Required]
-        public string City { get; set; }
+        public string? StreetAddress { get; set; }
+        public string? PostalCode { get; set; }
+        public string? City { get; set; }
 
     }
 }

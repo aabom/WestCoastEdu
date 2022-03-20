@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WestCoastEdu.DataAccess\WestCoastEdu.DataAccess.csproj" />
+    <ProjectReference Include="..\WestCoastEdu.Utility\WestCoastEdu.Utility.csproj" />
   </ItemGroup>
 
   <ItemGroup>
