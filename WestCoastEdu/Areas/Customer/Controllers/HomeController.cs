@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using WestCoastEdu.DataAccess.Repository.IRepository;
 using WestCoastEdu.Models;
 using WestCoastEdu.Models.ViewModels;
+using WestCoastEdu.Utility;
 
 namespace WestCoastEdu.Areas.Customer.Controllers
 {
@@ -53,13 +54,17 @@ namespace WestCoastEdu.Areas.Customer.Controllers
             if (cartFromDb == null)
             {
                 _unitOfWork.ShoppingCart.Add(shoppingCart);
+                _unitOfWork.Save();
+                HttpContext.Session.SetInt32(SD.SessionCart,
+                    _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == claim.Value).ToList().Count);
             }
             else
             {
                 _unitOfWork.ShoppingCart.IncrementCount(cartFromDb, shoppingCart.Count);
+                _unitOfWork.Save();
             }
 
-            _unitOfWork.Save();
+            
             
             return RedirectToAction(nameof(Index));
         }

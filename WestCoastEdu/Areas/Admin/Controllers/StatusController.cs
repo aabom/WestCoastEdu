@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WestCoastEdu.DataAccess.Repository.IRepository;
 using WestCoastEdu.Models;
+using WestCoastEdu.Utility;
 
 namespace WestCoastEdu.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class StatusController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -48,9 +51,8 @@ namespace WestCoastEdu.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            //var categoryFromDb = _db.Categories.Find(id);
+
             var statusFromDbFirst = _unitOfWork.Status.GetFirstOrDefault(u => u.Id == id);
-            //var categoryFromDbSingle = _db.Categories.SingleOrDefault(u => u.Id == id);
 
             if (statusFromDbFirst == null)
             {

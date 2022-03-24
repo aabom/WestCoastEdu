@@ -24,7 +24,7 @@ namespace WestCoastEdu.DataAccess.Repository
         {
             dbSet.Add(entity);
         }
-        //includeProp - "Category,CoverType"
+
         public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter=null, string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;

@@ -11,6 +11,14 @@ namespace WestCoastEdu.DataAccess
 
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer("Server=DESKTOP-BTBS32S;Database=WestCoastEdu;Trusted_Connection=True;");
+            }
+        }
+
         public DbSet<Product> Products { get; set; }
         public DbSet<Location> Location { get; set; }
         public DbSet<Status> Status { get; set; }

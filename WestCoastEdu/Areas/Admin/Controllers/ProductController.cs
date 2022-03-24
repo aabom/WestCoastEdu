@@ -1,13 +1,16 @@
 ﻿using System.Collections;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WestCoastEdu.DataAccess.Repository.IRepository;
 using WestCoastEdu.Models;
 using WestCoastEdu.Models.ViewModels;
+using WestCoastEdu.Utility;
 
 namespace WestCoastEdu.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -43,19 +46,13 @@ namespace WestCoastEdu.Areas.Admin.Controllers
 
             if (id is null or 0)
             {
-                //create product
-                //ViewBag.LocationList = LocationList;
-                //ViewData["StatusList"] = StatusList;
                 return View(productVM);
             }
             else
             {
                 productVM.Product = _unitOfWork.Product.GetFirstOrDefault(p => p.Id == id);
                 return View(productVM);
-                //update product
             }
-
-
         }
 
         [HttpPost]
@@ -104,9 +101,7 @@ namespace WestCoastEdu.Areas.Admin.Controllers
             }
             return View(obj);
         }
-        
 
-        
         #region API CALLS
 
         [HttpGet]
@@ -122,7 +117,7 @@ namespace WestCoastEdu.Areas.Admin.Controllers
             var product = _unitOfWork.Product.GetFirstOrDefault(p => p.Id == id);
             if (product == null)
             {
-                return Json(new {success = false, message = "Error while deleting"});
+                return Json(new { success = false, message = "Error while deleting" });
             }
 
             var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, product.ImageUrl.TrimStart('\\'));

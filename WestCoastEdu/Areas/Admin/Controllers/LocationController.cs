@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WestCoastEdu.DataAccess.Repository.IRepository;
 using WestCoastEdu.Models;
 using WestCoastEdu.Models.ViewModels;
+using WestCoastEdu.Utility;
 
 namespace WestCoastEdu.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class LocationController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
