@@ -68,9 +68,20 @@ namespace WCE.API.Controllers
 
             await _applicationDbContext.SaveChangesAsync();
             return Ok("Product updated successfully");
-
         }
 
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Product>> DeleteProduct(int id)
+        {
+            var dbProduct = await _applicationDbContext.Products.FindAsync(id);
+            if(dbProduct == null)
+            {
+                return BadRequest("Product not found");
+            }
 
+            _applicationDbContext.Remove(dbProduct);
+            await _applicationDbContext.SaveChangesAsync();
+            return Ok($"Product with id:{id} removed successfully");
+        }
     }
 }
