@@ -84,7 +84,7 @@ namespace WestCoastEdu.Areas.Admin.Controllers
                 return NotFound();
             }
             //var categoryFromDb = _db.Categories.Find(id);
-            var statusFromDbFirst = _unitOfWork.Location.GetFirstOrDefault(u => u.Id == id);
+            var statusFromDbFirst = _unitOfWork.Status.GetFirstOrDefault(u => u.Id == id);
             //var categoryFromDbSingle = _db.Categories.SingleOrDefault(u => u.Id == id);
 
             if (statusFromDbFirst == null)

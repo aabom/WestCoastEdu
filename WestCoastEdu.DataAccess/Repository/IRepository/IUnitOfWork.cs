@@ -11,7 +11,6 @@ namespace WestCoastEdu.DataAccess.Repository.IRepository
         ILocationRepository Location { get; }
         IStatusRepository Status { get; }
         IProductRepository Product { get; }
-        ICustomerRepository Customer { get; }
         IApplicationUserRepository ApplicationUser { get; }
         IShoppingCartRepository ShoppingCart { get; }
         IOrderDetailRepository OrderDetail { get; }

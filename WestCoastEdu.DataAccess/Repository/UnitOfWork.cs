@@ -17,7 +17,6 @@ namespace WestCoastEdu.DataAccess.Repository
             Location = new LocationRepository(_db);
             Status = new StatusRepository(_db);
             Product = new ProductRepository(_db);
-            Customer = new CustomerRepository(_db);
             ApplicationUser = new ApplicationUserRepository(_db);
             ShoppingCart = new ShoppingCartRepository(_db);
             OrderHeader = new OrderHeaderRepository(_db);
@@ -26,7 +25,6 @@ namespace WestCoastEdu.DataAccess.Repository
         public ILocationRepository Location { get; private set; }
         public IStatusRepository Status { get; private set; }
         public IProductRepository Product { get; private set; }
-        public ICustomerRepository Customer { get; private set; }
         public IApplicationUserRepository ApplicationUser { get; private set; }
         public IShoppingCartRepository ShoppingCart { get; private set; }
         public IOrderHeaderRepository OrderHeader { get; private set; }
