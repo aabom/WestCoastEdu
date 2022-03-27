@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WestCoastEdu.DataAccess;
 using WestCoastEdu.DataAccess.Repository.IRepository;
 using WestCoastEdu.Models;
@@ -19,9 +20,9 @@ namespace WCE.API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Product> GetAll()
+        public async Task<IEnumerable<Product>> GetAll()
         {
-            return _applicationDbContext.Products.ToList();
+            return await _applicationDbContext.Products.ToListAsync();
         }
 
         [HttpGet("{id}")]
@@ -49,10 +50,10 @@ namespace WCE.API.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<Product>> UpdateProduct(Product product)
+        public async Task<ActionResult<Product>> UpdateProduct(Product product, int id)
         {
-            var dbProduct = await _applicationDbContext.Products.FindAsync(product.Id);
-            if(dbProduct == null)
+            var dbProduct = _applicationDbContext.Products.FirstOrDefault(product => product.Id == id);
+            if (dbProduct == null)
             {
                 return BadRequest("Product not found");
             }
@@ -79,7 +80,7 @@ namespace WCE.API.Controllers
                 return BadRequest("Product not found");
             }
 
-            _applicationDbContext.Remove(dbProduct);
+            _applicationDbContext.Products.Remove(dbProduct);
             await _applicationDbContext.SaveChangesAsync();
             return Ok($"Product with id:{id} removed successfully");
         }
