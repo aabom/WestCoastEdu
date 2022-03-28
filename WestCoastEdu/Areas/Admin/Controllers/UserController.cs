@@ -25,34 +25,30 @@ namespace WestCoastEdu.Areas.Admin.Controllers
             return View(userList);
         }
 
-        //GET
-        //public IActionResult Upsert(int? id)
-        //{
-        //    ProductVM productVM = new()
-        //    {
-        //        Product = new(),
-        //        LocationList = _unitOfWork.Location.GetAll().Select(i => new SelectListItem
-        //        {
-        //            Text = i.Name,
-        //            Value = i.Id.ToString()
-        //        }),
-        //        StatusList = _unitOfWork.Status.GetAll().Select(i => new SelectListItem
-        //        {
-        //            Text = i.Name,
-        //            Value = i.Id.ToString()
-        //        }),
-        //    };
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var userList = _unitOfWork.ApplicationUser.GetAll();
+            return Json(new { data = userList });
+        }
 
-        //    if (id is null or 0)
-        //    {
-        //        return View(productVM);
-        //    }
-        //    else
-        //    {
-        //        productVM.Product = _unitOfWork.Product.GetFirstOrDefault(p => p.Id == id);
-        //        return View(productVM);
-        //    }
-        //}
+        //GET
+        public IActionResult Edit(string? id)
+        {
+            if (id is null)
+            {
+                return NotFound();
+            }
+
+            var userFromDbFirst = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == id);
+
+            if (userFromDbFirst == null)
+            {
+                return NotFound();
+            }
+
+            return View(userFromDbFirst);
+        }
 
         //[HttpPost]
         //[ValidateAntiForgeryToken]
@@ -103,32 +99,19 @@ namespace WestCoastEdu.Areas.Admin.Controllers
 
         #region API CALLS
 
-        [HttpGet]
-        public IActionResult GetAll()
+        [HttpDelete]
+        public IActionResult Delete(string? id)
         {
-            var userList = _unitOfWork.ApplicationUser.GetAll();
-            return Json(new { data = userList });
+            var user = _unitOfWork.ApplicationUser.GetFirstOrDefault(p => p.Id == id);
+            if (user == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+
+            _unitOfWork.ApplicationUser.Remove(user);
+            _unitOfWork.Save();
+            return Json(new { success = true, message = "Delete Successful" });
         }
-
-        //[HttpDelete]
-        //public IActionResult Delete(int? id)
-        //{
-        //    var product = _unitOfWork.Product.GetFirstOrDefault(p => p.Id == id);
-        //    if (product == null)
-        //    {
-        //        return Json(new { success = false, message = "Error while deleting" });
-        //    }
-
-        //    var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, product.ImageUrl.TrimStart('\\'));
-        //    if (System.IO.File.Exists(oldImagePath))
-        //    {
-        //        System.IO.File.Delete(oldImagePath);
-        //    }
-
-        //    _unitOfWork.Product.Remove(product);
-        //    _unitOfWork.Save();
-        //    return Json(new { success = true, message = "Delete Successful" });
-        //}
 
         #endregion
 
