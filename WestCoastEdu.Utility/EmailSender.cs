@@ -22,7 +22,8 @@ namespace WestCoastEdu.Utility
             using (var emailClient = new SmtpClient())
             {
                 emailClient.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
-                emailClient.Authenticate("iqwell1337@gmail.com", "Lucy136813!");
+                //Insert Email and Password
+                emailClient.Authenticate("", "");
                 emailClient.Send(emailToSend);
                 emailClient.Disconnect(true);
             }
