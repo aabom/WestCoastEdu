@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WestCoastEdu.Models\WestCoastEdu.Models.csproj" />
+    <ProjectReference Include="..\WestCoastEdu.Utility\WestCoastEdu.Utility.csproj" />
   </ItemGroup>
 
 </Project>
