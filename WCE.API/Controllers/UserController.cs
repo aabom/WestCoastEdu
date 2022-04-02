@@ -94,5 +94,21 @@ namespace WCE.API.Controllers
             await _applicationDbContext.SaveChangesAsync();
             return Ok($"User with id:{id} removed successfully");
         }
+
+        [HttpGet("GetCustomerOrderHistory/{userId}")]
+        public async Task<ActionResult<Product>> GetCustomerOrderHistory(string userId)
+        {
+            var userFromDb = await _applicationDbContext.ApplicationUsers.FindAsync(userId);
+
+            if (userFromDb == null)
+            {
+                return BadRequest("User not found");
+            }
+
+            List<OrderHeader> products = _applicationDbContext.OrderHeaders.Where(x => x.ApplicationUserId == userId).ToList();
+            return Ok(products);
+
+        }
+
     }
 }

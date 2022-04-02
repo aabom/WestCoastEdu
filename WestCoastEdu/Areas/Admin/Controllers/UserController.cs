@@ -50,7 +50,22 @@ namespace WestCoastEdu.Areas.Admin.Controllers
             return View(userFromDbFirst);
         }
 
-        
+        //POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(ApplicationUser user)
+        {
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.ApplicationUser.Update(user);
+                _unitOfWork.Save();
+                TempData["success"] = "User updated successfully";
+                return RedirectToAction("Index");
+            }
+            return View(user);
+        }
+
+
 
         #region API CALLS
 

@@ -204,7 +204,7 @@ namespace WestCoastEdu.Areas.Admin.Controllers
                 var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
                 orderHeaders = _unitOfWork.OrderHeader.GetAll(u => u.ApplicationUserId == claim.Value, includeProperties: "ApplicationUser");
             }
-
+            
             switch (status)
             {
                 case "pending":
