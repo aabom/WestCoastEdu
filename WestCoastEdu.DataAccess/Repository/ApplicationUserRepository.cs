@@ -16,6 +16,20 @@ namespace WestCoastEdu.DataAccess.Repository
         {
             _db = db;
         }
-        
+
+        public void Update(ApplicationUser user)
+        {
+            var userFromDb = _db.ApplicationUsers.FirstOrDefault(u => u.Id == user.Id);
+            if (userFromDb != null)
+            {
+                userFromDb.FirstName = user.FirstName;
+                userFromDb.LastName = user.LastName;
+                userFromDb.PhoneNumber = user.PhoneNumber;
+                userFromDb.Email = user.Email;
+                userFromDb.StreetAddress = user.StreetAddress;
+                userFromDb.PostalCode = user.PostalCode;
+                userFromDb.City = user.City;
+            }
+        }
     }
 }

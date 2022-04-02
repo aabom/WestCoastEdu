@@ -15,7 +15,7 @@ namespace WestCoastEdu.DataAccess
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=DESKTOP-BTBS32S;Database=WestCoastEdu;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=DESKTOP-BTBS32S;Database=WestCoastEdu2;Trusted_Connection=True;");
             }
         }
 
